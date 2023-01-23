@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agence{% endblock %}
+
+{% block body %}
+    <h1 class="text-center h1 m-3">Agence</h1>
+
+<div class="row justify-content-center">
+
+<div class="col-6">
+<h2 class="m-3">Employés</h2>
+ <table class="mx-auto col-10 table">
+        <thead>
+            <tr>
+            <th>Photo</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Contact</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+    {% for employe in agence.employes %}
+          
+            <tr>
+                <td><img style="width: 40px;" class="img-fluid rounded-circle border border-info border-3"src="{{ asset('uploads/employe/' ~ employe.filename) }}" alt=""></td>
+                <td>{{ employe.prenom }}</td>
+                <td>{{ employe.nom }}</td>
+                <td>{{ employe.contact }}</td>
+                <td>
+                <button type="button" class="btn btn-outline-primary btn-sm btn-block">
+                        <a href="{{ path('app_employe_show', {'id': employe.id}) }}">Montrer</a>
+                </button>
+                 {% if is_granted('ROLE_ADMIN') %}
+                <button type="button" class="btn btn-outline-primary btn-sm btn-block">
+                        <a href="{{ path('app_employe_edit', {'id': employe.id}) }}">Modifier</a>
+                </button>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+    <div class="col-6">
+
+    <h2 class="m-3">Logements</h2>
+
+    <div class="">
+ <div class="card-deck">
+{% for logement in agence.logements %}
+        <div class="card col-5" style="width: 350px;">
+            <img  style= "width:300px" class="img img-fluid"src="{{ asset('uploads/logement/' ~ logement.filename) }}" alt="">
+                <div class="card-body">
+                <div class="row">
+                <div class="col-8"> 
+                    <h5 class="card-title">{{ logement.ville }}</h5> 
+                </div>
+                </div>
+                 </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ logement.superficie }} m²</li>
+                    <li class="list-group-item">{{ logement.prix }} euros</li>
+                </ul>
+                <div class="card-body">
+                <button type="button" class="btn btn-outline-primary btn-lg btn-block">
+                        <a href="{{ path('app_logement_show', {'id': logement.id}) }}">Découvrir</a>
+                </button>
+                         
+                     {% if is_granted('ROLE_ADMIN') %}
+                    <button type="button" class="btn btn-outline-primary btn-lg btn-block">
+                       <a href="{{ path('app_logement_edit', {'id': logement.id}) }}">edit</a>
+                </button>
+                     {% endif %}
+                </div>
+                </div>
+{% endfor %}
+            </div>
+        </div>
+        </div>
+        </div>
+        
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_agence_edit', {'id': agence.id}) }}">edit</a>
+        {{ include('agence/_delete_form.html.twig') }}
+    {% endif %}
+
+{% endblock %}

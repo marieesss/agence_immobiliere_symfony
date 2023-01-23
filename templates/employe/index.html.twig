@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employe index{% endblock %}
+
+{% block body %}
+    <h1 class="m-10 text-center">Employés</h1>
+
+    <table class="mx-auto col-10 table">
+        <thead>
+            <tr>
+            <th>Photo</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Contact</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employe in employes %}
+            <tr>
+                <td><img style="width: 70px;" class="img-fluid rounded-circle border border-info border-3"src="{{ asset('uploads/employe/' ~ employe.filename) }}" alt=""></td>
+                <td>{{ employe.prenom }}</td>
+                <td>{{ employe.nom }}</td>
+                <td>{{ employe.contact }}</td>
+                <td>
+                    <a href="{{ path('app_employe_show', {'id': employe.id}) }}">show</a>
+                    <a href="{{ path('app_employe_edit', {'id': employe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_employe_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{path('app_front')}}">Agences immobilière</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{path('app_agence_index')}}">Nos agences</a>
+        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('app_logement_index')}}">Nos biens</a>
+        </ul>
+      
+        {% if is_granted('ROLE_USER') %}
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('app_logout')}}">Se déconnecter</a>
+        </ul>
+        {% else %}
+           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('app_inscription')}}">S'inscrire</a>
+        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('app_login')}}">Se connecter</a>
+        </ul>
+        {% endif %}
+        
+        {% if is_granted('ROLE_ADMIN') %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('app_admin')}}"> Admin </a>
+        </ul>
+        {% endif %}
+        </div>
+    </div>
+
+
+</nav>

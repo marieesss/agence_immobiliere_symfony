@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Logement{% endblock %}
+
+{% block body %}
+    <h1>Create new Logement</h1>
+    <div class = "row">
+        <div class = "col-6 p-10" > 
+        {{ include('logement/_form.html.twig') }}
+        </div>
+        <div class = "col-6">
+        <img src="https://images.unsplash.com/photo-1552765063-31cfdea3d1e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" 
+            class="img img-fluid">
+        </div>
+    </div>
+
+   
+
+    <a href="{{ path('app_logement_index') }}">back to list</a>
+{% endblock %}

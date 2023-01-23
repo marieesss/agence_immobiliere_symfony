@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FrontController!{% endblock %}
+
+{% block body %}
+<h1 class="text-center">Liste des agences </h1>
+{% for messages in app.flashes %}
+    <div class="alert alert-success text-center col-4 mx-auto">   
+    {{ messages[0] }} 
+    </div>
+{% endfor %}
+<div class="row">
+
+
+
+    {# Liste des biens à vendre #}
+    <div class="col-6 ms-4 mt-3">
+
+        <h2 class="text-center">Liste des biens à vendre</h2>
+        <ol class="list-group list-group-numbered">
+        {% for logement in logements %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">{{ logement.ville ~ '-' ~  logement.superficie }} m carré</div>
+                            {% for agence in logement.agences %} 
+                            {{ agence }}
+                            {% endfor %}
+                            <br>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{logement.prix}}</span>
+                    <button type="button" class=" col-3 btn btn-outline-primary btn-sm btn-block">
+                       <a href="{{ path('app_logement_edit', {'id': logement.id}) }}">Modifier</a>
+                </button>
+            
+                </li>
+                {% endfor %}
+        </ol>
+        <button type="button" class="m-3 col-4 btn btn-outline-primary btn-sm btn-block">
+                        <a href="{{ path('app_logement_new') }}">Créer une annonce</a>
+                </button>
+    </div>
+
+    {# Liste des employes #}
+    <div class="col-6 me-4 mt-3">
+        <h1 class="m-10 text-center">Employés</h1>
+
+    <table class="mx-auto col-10 table">
+        <thead>
+            <tr>
+            <th>Photo</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Contact</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employe in employes %}
+            <tr>
+                <td><img style="width: 40px;" class="img-fluid rounded-circle border border-info border-3"src="{{ asset('uploads/employe/' ~ employe.filename) }}" alt=""></td>
+                <td>{{ employe.prenom }}</td>
+                <td>{{ employe.nom }}</td>
+                <td>{{ employe.contact }}</td>
+                <td>
+                <button type="button" class="btn btn-outline-primary btn-sm btn-block">
+                        <a href="{{ path('app_employe_show', {'id': employe.id}) }}">Montrer</a>
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-sm btn-block">
+                        <a href="{{ path('app_employe_edit', {'id': employe.id}) }}">Modifier</a>
+                </button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+
+    
+
+    <div class="row d-flex justify-content-center">
+    <div class="col-6 mx-auto">
+     <h2 class="text-center">Liste des Agences</h2>
+
+{% for agence in agences %}
+<div class="row d-flex justify-content-center">
+    <div class="col-3"> <img style="width: 50px;" class="img img-fluid"src="{{ asset('uploads/agence/' ~ agence.filename) }}" alt="">
+    </div>
+        <div class="col-4"> 
+            <h3> Logements </h3>
+                {% for logement in agence.logements %}
+                    <div class="">
+                        <h5>{{logement.ville ~ '-' ~ logement.superficie }}</h5>     
+                    </div>  
+                     <button type="button" class=" col-6 btn btn-outline-primary btn-block">
+                        <a href="{{ path('app_logement_show', {'id': logement.id}) }}">Découvrir</a>
+                </button>
+                    {% endfor %}
+       </div>
+        <div class="col-4">
+            <h3> Employés </h3> 
+            {% for employe in agence.employes %}
+                <div>
+                 {{ employe.nom ~ '-' ~ employe.prenom }}
+                </div>
+                {% endfor %}
+        
+    </div>
+  {% endfor %}
+  
+  
+
+</div>
+</div>
+{% endblock %}

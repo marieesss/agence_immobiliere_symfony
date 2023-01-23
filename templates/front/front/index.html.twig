@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FrontController!{% endblock %}
+
+{% block body %}
+{% for messages in app.flashes %}
+    <div class="alert alert-success text-center col-4 mx-auto">   
+    {{ messages[0] }} 
+    </div>
+{% endfor %}
+<div style="height:300px;" class="row d-flex justify-content-evenly ">
+        <div class=" col-12 bg-secondary p-5">
+            <h1 class="text-center text-light h1">Agence immobilière</h1>
+            <p class="text-center text-light"> Ce site est a été crée avec Symfony lors d'un cours de troisième année de bachelor développement web à My DigitalSchool</p>
+            <p class="text-center text-light"> Bonne visite !</p>
+
+        </div>
+</div>
+
+
+<div class="row m-5">
+    <div class="col-10 mx-auto">
+    <h1 class="text-center"> Nos dernières annonces</h1>
+ <div class="card-deck my-4">
+{% for logement in logements |slice(0,3) %}
+     <div class="card col-4" style="width: 18rem;">
+            <img class="img img-fluid"src="{{ asset('uploads/logement/' ~ logement.filename) }}" alt="">
+                <div class="card-body">
+                <div class="row">
+                <div class="col-8"> 
+                    <h5 class="card-title">{{ logement.ville }}</h5> 
+                </div>
+                 {% for agence in logement.agences %}
+                    <div class="col-4">
+                    <img class="img img-fluid"src="{{ asset('uploads/agence/' ~ agence.filename) }}" alt="">
+                    </div>
+                {% endfor %}
+                </div>
+                 </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ logement.superficie }} m²</li>
+                    <li class="list-group-item">{{ logement.prix }} euros</li>
+                </ul>
+                <div class="card-body">
+                <button type="button" class="btn btn-outline-primary btn-lg btn-block">
+                        <a href="{{ path('app_logement_show', {'id': logement.id}) }}">Découvrir</a>
+                </button>
+                         
+                     {% if is_granted('ROLE_ADMIN') %}
+                    <button type="button" class="btn btn-outline-primary btn-lg btn-block">
+                       <a href="{{ path('app_logement_edit', {'id': logement.id}) }}">edit</a>
+                </button>
+                     {% endif %}
+                </div>
+                </div>
+
+{% endfor %}
+</div>
+                </div>
+                </div>
+
+{% endblock %}
